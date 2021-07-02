@@ -1,9 +1,10 @@
 import React from 'react'
+import { Header } from '../Components/'
 
 export default function Blog() {
     return (
         <div>
-            Blog
+            <Header title={'The Blog'} />
         </div>
     )
 }

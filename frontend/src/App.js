@@ -3,10 +3,13 @@ import { Route, Switch } from 'react-router-dom'
 
 import { NavigationBar, Footer } from './Components'
 import { Home, Blog, Shop, About } from './Pages'
+import { NameContext } from './Context'
 
 function App() {
+
   return (
     <>
+    <NameContext.Provider value={'BellaÖ'} >
       <NavigationBar />
       <Switch >
         <Route path='/' component={Home} exact/>
@@ -15,6 +18,7 @@ function App() {
         <Route path='/about' component={About} exact/>
       </Switch>
       <Footer />
+    </NameContext.Provider>
     </>
   );
 }

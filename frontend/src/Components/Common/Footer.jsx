@@ -12,7 +12,10 @@ const useStyles = makeStyles(theme =>({
         width: '80%',
         margin: '100px auto 100px',
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        [theme.breakpoints.down('sm')]:{
+            flexFlow: 'column'
+        }
     },
     leftSide:{
         display: 'flex',

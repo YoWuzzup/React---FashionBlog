@@ -13,3 +13,9 @@ export { default as pic09 } from './Home/09.jpg'
 export { default as pic10 } from './Home/10.jpg'
 export { default as pic11 } from './Home/11.jpg'
 export { default as pic12 } from './Home/12.jpg'
+
+
+// about
+export { default as me } from './About/1.webp'
+export { default as secondMe } from './About/2.webp'
+export { default as staticBg } from './About/3.webp'

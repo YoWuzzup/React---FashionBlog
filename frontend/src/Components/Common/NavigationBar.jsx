@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { AppBar, MenuList, MenuItem, Typography } from '@material-ui/core'
 import { Links } from '../'
+import { NameContext } from '../../Context'
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme)=>({
         alignItems: 'center',
         boxShadow: 'none',
         width: '100%',
-        height: '87px',
+        height: '95px',
         [theme.breakpoints.down('sm')]: {
             flexFlow: 'column',
             height: 'auto',
@@ -68,9 +69,9 @@ const theme = createMuiTheme({
 });
 
 export default function NavigationBar() {
-    const classes = useStyles();
+    const classes = useStyles()
+    const nameContext = React.useContext(NameContext)
     const [selectedMenuItem, setSelectedMenuItem] = useState('home')
-    const ownerName = 'BellaÖ'
     const btns = [
         {name: 'home', url: ''}, 
         {name: 'blog', url: 'blog'}, 
@@ -78,15 +79,19 @@ export default function NavigationBar() {
         {name: 'about', url: 'about'}, 
         {name: 'contact', url: ''}
     ]
-    
-    const handleClick = (e)=>{
+    const handleClick = (e, name)=>{
         setSelectedMenuItem(e.target.name);
+        if (e.target.name === name ) {
+            window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
+        }
     }
 
     return (
     <AppBar position='fixed' className={classes.root} >
 
-        <Typography className={classes.name} >{ownerName}</Typography>
+        <Typography className={classes.name} >
+            {nameContext}
+        </Typography>
 
         <ThemeProvider theme={theme} >
             <MenuList className={classes.menuList} >
@@ -96,7 +101,7 @@ export default function NavigationBar() {
                     <MenuItem 
                         className={`${classes.menuItem} ${selectedMenuItem === item.name ? classes.activeMenuItem : ''}`} 
                         component={Link} 
-                        to={`/${item.url}`} onClick={e => handleClick(e)} name={item.name} key={`${item.name}_${index}`}
+                        to={`/${item.url}`} onClick={e => handleClick(e, item.name)} name={item.name} key={`${item.name}_${index}`}
                     >
                         {item.name}
                     </MenuItem>)
