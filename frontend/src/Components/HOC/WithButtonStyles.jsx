@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Button } from '@material-ui/core/'
+import { Button, Link } from '@material-ui/core/'
 
 const styles = {
     root:{
@@ -22,13 +22,16 @@ const styles = {
     },
 };
 
-function WithButtonStyles({ classes, name }) {
+function WithButtonStyles({ classes, name, url }) {
     return (
-    <Button className={classes.root}  
-        disableRipple={true}
-    >
-        {name}
-    </Button>)
+    <Link href={`/${url}`} underline='none' >
+        <Button className={classes.root}  
+            disableRipple={true}
+        >
+            {name}
+        </Button>
+    </Link>
+    )
 }
 
 export default withStyles(styles)(WithButtonStyles);
