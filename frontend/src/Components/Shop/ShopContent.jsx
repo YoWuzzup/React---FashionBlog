@@ -34,7 +34,6 @@ export default function ShopContent() {
             justify="center"
             alignItems="center"
             className={classes.root}
-            xs={12}
         >
             <Grid item  container
                 direction="row"
