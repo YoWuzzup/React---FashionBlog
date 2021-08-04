@@ -27,6 +27,7 @@
     "@nestjs/mongoose": "^7.2.4",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/typeorm": "^8.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "mongoose": "^5.13.3",
     "mysql2": "^2.2.5",

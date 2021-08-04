@@ -1,12 +1,12 @@
 const initialState = {
-    items: [],
+    products: [],
 }
 
-export const items = (items = initialState.items, action)=>{
+export const products = (products = initialState.products, action)=>{
     switch (action.type) {
         case 'FETCH_ITEMS':
             return action.payload
         default:
-        return items
+        return products
     }
 }

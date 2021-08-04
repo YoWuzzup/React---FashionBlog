@@ -1,9 +1,9 @@
 import * as api from '../../api'
 
 // action creators
-export const getItems = ()=> async (dispatch) =>{
+export const getProducts = ()=> async (dispatch) =>{
     try{
-        const { data } = await api.fetchItems()
+        const { data } = await api.fetchProducts()
 
         dispatch({ type: 'FETCH_ITEMS', payload: data })
     } catch(er){

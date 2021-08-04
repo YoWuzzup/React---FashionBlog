@@ -1,12 +1,12 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete } from "@nestjs/common"
+import { Controller, Get } from "@nestjs/common"
 import { ProductsService } from './products.service'
 
-@Controller('/products')
+@Controller('products')
 export class ProductsController{
     constructor(private productsService: ProductsService) {}
 
     @Get()
-    async getAllProducts(){
+    async getProducts(){
         const products = await this.productsService.getProducts()
         return products
     }
