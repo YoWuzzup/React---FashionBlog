@@ -9,3 +9,11 @@ export const fetchProducts = async ()=>{
         console.log(error);        
     }
 }
+
+export const fetchPosts = async ()=>{
+    try {
+        return axios.get(`${url}posts`)
+    } catch (error) {
+        console.log(error)
+    }
+}

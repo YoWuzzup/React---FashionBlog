@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme)=>({
         transition: 'none !important',
         '&:hover, &:focus':{
             color: 'rgb(124, 100, 14)',
-            backgroundColor: 'inherit',transition: 'none !important'
+            backgroundColor: 'inherit',
+            transition: 'none !important'
         },
         [theme.breakpoints.down('xs')]: {
             justifyContent: 'center'
@@ -68,17 +69,19 @@ const theme = createMuiTheme({
     },
 });
 
+const btns = [
+    {name: 'home', url: ''}, 
+    {name: 'blog', url: 'blog'}, 
+    {name: 'shop', url: 'shop'}, 
+    {name: 'about', url: 'about'}, 
+    {name: 'contact', url: ''}
+]
+
 export default function NavigationBar() {
     const classes = useStyles()
     const nameContext = React.useContext(NameContext)
     const [selectedMenuItem, setSelectedMenuItem] = useState('home')
-    const btns = [
-        {name: 'home', url: ''}, 
-        {name: 'blog', url: 'blog'}, 
-        {name: 'shop', url: 'shop'}, 
-        {name: 'about', url: 'about'}, 
-        {name: 'contact', url: ''}
-    ]
+
     const handleClick = (e, name)=>{
         setSelectedMenuItem(e.target.name);
         if (e.target.name === name ) {
