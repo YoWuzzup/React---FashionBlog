@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#f8f4ec',
     },
     rootInner:{
+        justifyContent: 'space-between',
         [theme.breakpoints.down('md')]:{
             justifyContent: 'center'
         }
@@ -35,17 +36,15 @@ export default function ShopContent() {
             alignItems="center"
             className={classes.root}
         >
-            <Grid item  container
+            <Grid item container
                 direction="row"
-                justify="space-between"
-                alignItems="center"
+                alignItems='center'
                 xs={11}             
                 className={classes.rootInner}
-
             >
                 {fetchedProducts.map((prod, index)=>{
                     return(
-                        <Product key={`${prod.name}_${index}`} item={prod} />
+                        <Product key={`${prod.name}_${index}`} item={prod} spacing={1}/>
                    ) 
                 })}
             </Grid>

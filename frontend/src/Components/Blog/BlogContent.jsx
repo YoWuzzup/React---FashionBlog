@@ -11,7 +11,8 @@ const useStyles = makeStyles(theme =>({
         flexFlow: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '60px 0 0 0'
+        padding: '60px 0 0 0',
+        backgroundColor: '#f3f1ea'
     },
     buttonPanel:{
 
@@ -26,11 +27,43 @@ const useStyles = makeStyles(theme =>({
             backgroundColor: 'inherit',
         },
         [theme.breakpoints.down('xs')]: {
-            justifyContent: 'center'
+            justifyContent: 'center',
+            margin: '0 0 20px'
+        },
+        [theme.breakpoints.down('md')]:{
+            justifyContent: 'center',
+            textAlign: 'center'
         }
     },
     activeButtons:{
         color: 'rgb(124, 100, 14)',
+    },
+    postContainer:{
+        justifyContent: 'space-between',
+        [theme.breakpoints.down('md')]:{
+            justifyContent: 'center'
+        },
+        [theme.breakpoints.down('xs')]:{
+            margin: '0 0 20px'
+        }
+    },
+    buttonsContainer:{
+        justifyContent: 'space-between',
+        [theme.breakpoints.down('md')]:{
+            justifyContent: 'center',
+        },
+        [theme.breakpoints.down('xs')]:{
+            flexFlow: 'column'
+        }
+    },
+    sortingButtons:{
+        [theme.breakpoints.down('md')]:{
+            justifyContent: 'center',
+            textAlign: 'center'
+        },
+        [theme.breakpoints.down('xs')]:{
+            flexFlow: 'column',
+        }
     }
 }))
 
@@ -41,7 +74,6 @@ export default function BlogContent() {
     const dispatch = useDispatch()
     const [activeSort, setActiveSort] = React.useState('All Posts')
     const fetchedPosts = useSelector( state=> state.posts )
-    console.log(fetchedPosts);
 
     const handleActiveSortClick = e =>{
         setActiveSort(e.target.innerText)
@@ -56,10 +88,11 @@ export default function BlogContent() {
         <div className={classes.root} >
             <Grid item container 
                 xs={11} 
-                style={{ justifyContent: 'space-between'}}
+                className={classes.buttonsContainer}
             >
                 <Grid item container
-                    xs={5}
+                    xs={8}
+                    className={classes.sortingButtons}
                 >
                     {buttonArray && buttonArray.map((item, index)=>{
                         return(
@@ -81,10 +114,19 @@ export default function BlogContent() {
 
             <Grid item container
                 xs={11} 
+                spacing={4}
+                className={classes.postContainer}
             >
                 {fetchedPosts && fetchedPosts.map((post, index)=>{
                     return(
-                        <Post key={`${post}_${index}`} />
+                        <Grid item
+                            lg={3}
+                            md={6}
+                            xs={10}
+                            key={`${post}_${index}`}
+                        >
+                            <Post post={post} />
+                        </Grid>
                     )
                 })}
             </Grid>
