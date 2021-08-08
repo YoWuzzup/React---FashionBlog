@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common"
+import { Controller, Get, Param } from "@nestjs/common"
 import { PostsService } from './posts.service'
 
 @Controller('posts')
@@ -9,5 +9,10 @@ export class PostsController{
     async getPosts(){
         const posts = await this.postsService.getPosts()
         return posts
+    }
+    
+    @Get(`:id`)
+    getPost(@Param('id') postId: string){
+        return this.postsService.getSinglePost(postId)
     }
 }

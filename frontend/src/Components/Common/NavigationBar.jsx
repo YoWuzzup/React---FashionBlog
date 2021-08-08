@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeNavButton } from '../../Redux/Actions/Buttons'
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { AppBar, MenuList, MenuItem, Typography } from '@material-ui/core'
 import { Links } from '../'
@@ -79,11 +81,12 @@ const btns = [
 
 export default function NavigationBar() {
     const classes = useStyles()
+    const dispatch = useDispatch()
     const nameContext = React.useContext(NameContext)
-    const [selectedMenuItem, setSelectedMenuItem] = useState('home')
+    const reduxNavButton = useSelector( state=> state.navigationButton )
 
     const handleClick = (e, name)=>{
-        setSelectedMenuItem(e.target.name);
+        dispatch(changeNavButton(e.target.name))
         if (e.target.name === name ) {
             window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
         }
@@ -102,7 +105,7 @@ export default function NavigationBar() {
                 {btns && btns.map((item,index)=>{
                     return(
                     <MenuItem 
-                        className={`${classes.menuItem} ${selectedMenuItem === item.name ? classes.activeMenuItem : ''}`} 
+                        className={`${classes.menuItem} ${reduxNavButton === item.name ? classes.activeMenuItem : ''}`} 
                         component={Link} 
                         to={`/${item.url}`} onClick={e => handleClick(e, item.name)} name={item.name} key={`${item.name}_${index}`}
                     >

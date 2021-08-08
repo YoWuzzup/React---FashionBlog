@@ -75,13 +75,12 @@ export default function Post({ post }) {
     const date = new Date(`${post.date}`)
     const day = date.getDate()
     const month = date.toLocaleString('default', {month: 'short'})
-    const niceLink = post.title.toLowerCase().replace(/\s+/g, '')
 
     return (
         <div
             className={classes.root} 
         >
-            <Link to={`posts/${niceLink}`} >
+            <Link to={`posts/${post.id}`} >
                 <img alt={`${post.title}`} src={post.image} className={classes.image} />
             </Link>
 
@@ -130,7 +129,7 @@ export default function Post({ post }) {
                     
                 </Grid>
 
-                <Link to={`posts/${niceLink}`} className={classes.title}>
+                <Link to={`posts/${post.id}`} className={classes.title}>
                     <h3 style={{ margin: '0', minHeight: '70px' }}>
                         {post.title}
                     </h3>

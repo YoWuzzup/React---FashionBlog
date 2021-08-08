@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { changePostSortingButton } from '../../Redux/Actions/Buttons'
 import { getPosts } from '../../Redux/Actions/Posts'
 import { Button, Grid, makeStyles } from '@material-ui/core'
 import { LogInButton, Post } from '../'
@@ -67,16 +68,16 @@ const useStyles = makeStyles(theme =>({
     }
 }))
 
-const buttonArray = [{text: 'All Posts'}, {text: 'Fashion'}, {text: 'Beauty'}, {text: 'Home'}]
+const buttonArray = [{text: 'All Posts', query: 'allposts'}, {text: 'Fashion', query: 'fashion'}, {text: 'Beauty', query: 'beauty'}, {text: 'Home', query: 'home'}]
 
 export default function BlogContent() {
     const classes = useStyles()
     const dispatch = useDispatch()
-    const [activeSort, setActiveSort] = React.useState('All Posts')
     const fetchedPosts = useSelector( state=> state.posts )
+    const activeSort = useSelector( state => state.postSortingButton)
 
     const handleActiveSortClick = e =>{
-        setActiveSort(e.target.innerText)
+        dispatch(changePostSortingButton(e.target.innerText))
     }
 
     useEffect(() => {
@@ -98,7 +99,7 @@ export default function BlogContent() {
                         return(
                         <Button 
                             disableRipple
-                            className={`${classes.buttons} ${activeSort === item.text ? classes.activeButtons : ''}`} 
+                            className={`${classes.buttons} ${activeSort === item.query ? classes.activeButtons : ''}`} 
                             onClick={ e => handleActiveSortClick(e)} 
                             key={`${item.tex}_${index}`}
                         >
