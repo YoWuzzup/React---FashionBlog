@@ -21,7 +21,7 @@ export default function Links({ jContent }) {
     return (
         <Grid container item xs={2} 
             justify={`${jContent}`} alignItems='center' alignContent='center' 
-            className={classes.linksContainer}
+            className={`${classes.linksContainer}`}
         >
             <a href="https://www.instagram.com/" className={classes.links} >
                 <Instagram />

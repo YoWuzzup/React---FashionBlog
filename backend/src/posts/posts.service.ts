@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common"
+import { Injectable, NotFoundException, Query } from "@nestjs/common"
 import { InjectModel } from "@nestjs/mongoose"
 import { Model } from 'mongoose'
 
@@ -10,8 +10,12 @@ export class PostsService{
         @InjectModel('Post') private readonly postModel: Model<Post>,
     ){}
 
-    async getPosts(){
-        const posts = await this.postModel.find().exec()
+    async getPosts(@Query() query: Record<string, any>): Promise<object> {
+        const posts = query ? 
+            await this.postModel.find().sort('-date').limit(Number(query.fetchLength)).exec() 
+            : 
+            await this.postModel.find().exec()
+        
 
         return posts.map(post =>({
             id: post.id,

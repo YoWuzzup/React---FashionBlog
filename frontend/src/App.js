@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from 'react-router-dom'
 
-import { NavigationBar, Footer } from './Components'
+import { NavigationBar, Footer, SinglePost } from './Components'
 import { Home, Blog, Shop, About } from './Pages'
 import { NameContext } from './Context'
 
@@ -16,6 +16,7 @@ function App() {
         <Route path='/blog' component={Blog} exact/>
         <Route path='/shop' component={Shop} exact/>
         <Route path='/about' component={About} exact/>
+        <Route path={`/posts/:id`} component={SinglePost} />
       </Switch>
       <Footer />
     </NameContext.Provider>

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { FiberManualRecord, MoreVert, FavoriteBorder, ChatBubbleOutline, VisibilityOutlined } from '@material-ui/icons'
+import { FiberManualRecord, MoreVert, ChatBubbleOutline, VisibilityOutlined } from '@material-ui/icons'
+import { LikesButton } from '..'
 
 const useStyles = makeStyles({
     root:{
@@ -156,14 +157,7 @@ export default function Post({ post }) {
                             {post.comments.length} 
                         </Grid>
 
-                        <Grid item container
-                            alignItems="center"
-                            xs={2}
-                            className={classes.likes}
-                        > 
-                            {post.likes}
-                            <FavoriteBorder style={{ fontSize: 20, color: 'red', margin: '0 0 0 7px'  }} />
-                        </Grid>
+                        <LikesButton likes={post.likes} likesStyles={classes.likes} />
 
                 </Grid>
 

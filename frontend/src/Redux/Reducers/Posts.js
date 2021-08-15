@@ -1,5 +1,6 @@
 const initialState = {
     posts: [],
+    singlePost: []
 }
 
 export const posts = (posts = initialState.posts, action) =>{
@@ -8,5 +9,14 @@ export const posts = (posts = initialState.posts, action) =>{
             return action.payload
         default:
             return posts
+    }
+}
+
+export const singlePost = (post = initialState.singlePost, action)=>{
+    switch (action.type) {
+        case "FETCH_SINGLE_POST":
+            return action.payload            
+        default:
+            return post
     }
 }

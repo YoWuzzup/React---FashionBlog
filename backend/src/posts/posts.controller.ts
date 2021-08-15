@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from "@nestjs/common"
+import { Controller, Get, Param, Query } from "@nestjs/common"
 import { PostsService } from './posts.service'
 
 @Controller('posts')
@@ -6,8 +6,9 @@ export class PostsController{
     constructor(private postsService: PostsService) {}
 
     @Get()
-    async getPosts(){
-        const posts = await this.postsService.getPosts()
+    async getPosts(@Query() query: Record<string, any>): Promise<object>{
+        const posts = await this.postsService.getPosts(query)
+        
         return posts
     }
     

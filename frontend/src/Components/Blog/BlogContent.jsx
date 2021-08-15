@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { changePostSortingButton } from '../../Redux/Actions/Buttons'
 import { getPosts } from '../../Redux/Actions/Posts'
-import { Button, Grid, makeStyles } from '@material-ui/core'
-import { LogInButton, Post } from '../'
+import { Grid, makeStyles } from '@material-ui/core'
+import { Post, PostSortingButtons } from '../'
 
 const useStyles = makeStyles(theme =>({
     root:{
@@ -15,30 +14,6 @@ const useStyles = makeStyles(theme =>({
         padding: '60px 0 0 0',
         backgroundColor: '#f3f1ea'
     },
-    buttonPanel:{
-
-    },
-    buttons: {
-        fontSize: '18px',
-        textTransform: 'capitalize',
-        margin: '0 40px 20px 0',
-        padding: '0',
-        '&:hover, &:focus':{
-            color: 'rgb(124, 100, 14)',
-            backgroundColor: 'inherit',
-        },
-        [theme.breakpoints.down('xs')]: {
-            justifyContent: 'center',
-            margin: '0 0 20px'
-        },
-        [theme.breakpoints.down('md')]:{
-            justifyContent: 'center',
-            textAlign: 'center'
-        }
-    },
-    activeButtons:{
-        color: 'rgb(124, 100, 14)',
-    },
     postContainer:{
         justifyContent: 'space-between',
         [theme.breakpoints.down('md')]:{
@@ -48,37 +23,12 @@ const useStyles = makeStyles(theme =>({
             margin: '0 0 20px'
         }
     },
-    buttonsContainer:{
-        justifyContent: 'space-between',
-        [theme.breakpoints.down('md')]:{
-            justifyContent: 'center',
-        },
-        [theme.breakpoints.down('xs')]:{
-            flexFlow: 'column'
-        }
-    },
-    sortingButtons:{
-        [theme.breakpoints.down('md')]:{
-            justifyContent: 'center',
-            textAlign: 'center'
-        },
-        [theme.breakpoints.down('xs')]:{
-            flexFlow: 'column',
-        }
-    }
 }))
-
-const buttonArray = [{text: 'All Posts', query: 'allposts'}, {text: 'Fashion', query: 'fashion'}, {text: 'Beauty', query: 'beauty'}, {text: 'Home', query: 'home'}]
 
 export default function BlogContent() {
     const classes = useStyles()
     const dispatch = useDispatch()
     const fetchedPosts = useSelector( state=> state.posts )
-    const activeSort = useSelector( state => state.postSortingButton)
-
-    const handleActiveSortClick = e =>{
-        dispatch(changePostSortingButton(e.target.innerText))
-    }
 
     useEffect(() => {
         dispatch(getPosts())
@@ -87,31 +37,8 @@ export default function BlogContent() {
 
     return (
         <div className={classes.root} >
-            <Grid item container 
-                xs={11} 
-                className={classes.buttonsContainer}
-            >
-                <Grid item container
-                    xs={8}
-                    className={classes.sortingButtons}
-                >
-                    {buttonArray && buttonArray.map((item, index)=>{
-                        return(
-                        <Button 
-                            disableRipple
-                            className={`${classes.buttons} ${activeSort === item.query ? classes.activeButtons : ''}`} 
-                            onClick={ e => handleActiveSortClick(e)} 
-                            key={`${item.tex}_${index}`}
-                        >
-                            {item.text}
-                        </Button>)
-                    })}
-                </Grid>
-                
-                <LogInButton />
 
-            </Grid>
-
+            <PostSortingButtons />
 
             <Grid item container
                 xs={11} 
@@ -131,6 +58,7 @@ export default function BlogContent() {
                     )
                 })}
             </Grid>
+
         </div>
     )
 }
