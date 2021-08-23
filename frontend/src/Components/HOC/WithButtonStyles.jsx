@@ -23,10 +23,11 @@ const styles = {
 };
 
 function WithButtonStyles({ classes, name, url }) {
+
     return (
     <Link href={`/${url}`} underline='none' >
         <Button className={classes.root}  
-            disableRipple={true}
+            disableRipple
         >
             {name}
         </Button>

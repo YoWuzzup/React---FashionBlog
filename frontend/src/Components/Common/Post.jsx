@@ -12,11 +12,10 @@ const useStyles = makeStyles({
     },
     image: {
         width: '100%',
-        height: '340px',
         objectFit: 'cover'
     },
     info:{
-        margin: '25px 0 0'
+        padding: '25px 0 0'
     },
     data:{
         fontSize: '12px',
@@ -71,7 +70,7 @@ const Svg = ()=>{
     )
 }
 
-export default function Post({ post }) {
+export default function Post({ post, page }) {
     const classes = useStyles()
     const date = new Date(`${post.date}`)
     const day = date.getDate()
@@ -82,13 +81,19 @@ export default function Post({ post }) {
             className={classes.root} 
         >
             <Link to={`posts/${post.id}`} >
-                <img alt={`${post.title}`} src={post.image} className={classes.image} />
+                <img 
+                    alt={`${post.title}`} 
+                    src={post.image} 
+                    className={classes.image} 
+                    style={{ height: page ==='main' ? '250px' : '340px' }} 
+                />
             </Link>
 
             <Grid className={classes.info} 
                 container item
                 direction="column"
                 alignItems="center"
+                style={{ backgroundColor: page === 'main' ? '#f8f4ec' : '#fff'}}
             >
 
                 <Grid className={classes.data}

@@ -4,8 +4,7 @@ import { Grid } from '@material-ui/core'
 import { Post } from '..'
 import { getPosts } from '../../Redux/Actions/Posts'
 
-
-export default function RecentPosts({ fetchLength }) {
+export default function RecentPosts({ fetchLength, rootStyle, page }) {
     const dispatch = useDispatch()
     const fetchedRecentPosts = useSelector(state => state.posts)
 
@@ -18,20 +17,22 @@ export default function RecentPosts({ fetchLength }) {
         <Grid
             container item
             direction="row"
-            alignItems="center"
-            justify='space-between'
-            xs={7}
-            style={{ margin: '0 auto' }}
+            alignItems='center'
+            justify={page === 'main' ? "center" : 'space-between'}
+            spacing={5}
+            md={7}
+            xs={10}
+            style={{ rootStyle }}
         >
             {fetchedRecentPosts && fetchedRecentPosts.map((post, index)=>{
                     return(
                         <Grid item
-                            lg={5}
-                            md={5}
-                            xs={10}
+                            lg={fetchedRecentPosts.length > 2 ? 4 : 5}
+                            md={10}
+                            xs={12}
                             key={`${post}_${index}`}
                         >
-                            <Post post={post} />
+                            <Post post={post} page={page} />
                         </Grid>
                     )
                 })}

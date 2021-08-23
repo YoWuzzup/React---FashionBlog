@@ -134,7 +134,7 @@ export default function AboutContent({ path }) {
                 </p>
 
                 {!checkingPathname ? 
-                    <WithButtonStyles name={'Read More'} url={'about'}/> 
+                    <WithButtonStyles name={'Read More'} url={'about'} /> 
                 :
                 <p className={classes.para}>
                     This is a great space to write a long text about 
