@@ -33,3 +33,11 @@ export const fetchSinglePost = async (id)=>{
         console.log(`There's no such post with ID: ${id}.`)
     }
 }
+
+export const likePost = async id =>{
+    try {
+        return axios.patch(`${url}posts/${id}/likepost`)
+    } catch (error) {
+        console.log(error);
+    }
+}

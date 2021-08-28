@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from "@nestjs/common"
+import { Controller, Get, Param, Patch, Query } from "@nestjs/common"
 import { PostsService } from './posts.service'
 
 @Controller('posts')
@@ -15,5 +15,10 @@ export class PostsController{
     @Get(`:id`)
     getPost(@Param('id') postId: string){
         return this.postsService.getSinglePost(postId)
+    }
+
+    @Patch(':id/likepost')
+    likePost(@Param('id') postId: string){
+        return this.postsService.likePost(postId)
     }
 }

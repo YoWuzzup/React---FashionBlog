@@ -1,7 +1,7 @@
 import { combineReducers } from "redux"
 
 import { products } from './Products'
-import { posts, singlePost } from './Posts'
+import { posts, recentPosts } from './Posts'
 import { navigationButton, postSortingButton } from './Buttons'
 
 export default combineReducers({
@@ -9,5 +9,5 @@ export default combineReducers({
     posts,
     navigationButton,
     postSortingButton,
-    singlePost
+    recentPosts
 })

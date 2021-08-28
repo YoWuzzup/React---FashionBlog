@@ -1,9 +1,9 @@
-import { fetchPosts, fetchSinglePost } from '../../api/index'
+import { fetchPosts, likePost, fetchSinglePost } from '../../api/index'
 
 // action creators
-export const getPosts = (fetchLength) => async (dispatch)=>{
+export const getPosts = () => async (dispatch)=>{
     try {
-        const { data } = fetchLength ? await fetchPosts(fetchLength) : await fetchPosts()
+        const { data } = await fetchPosts()
 
         dispatch({type: 'FETCH_POSTS', payload: data })
     } catch (er) {
@@ -11,12 +11,23 @@ export const getPosts = (fetchLength) => async (dispatch)=>{
     }
 }
 
-export const getSinglePost = (id) => async (dispatch)=>{
+export const getRecentPosts = (fetchLength) => async (dispatch)=>{
     try {
-        const { data } = await fetchSinglePost(id)
+        const { data } = fetchLength ? await fetchPosts(fetchLength) : await fetchPosts()
 
-        dispatch({type: 'FETCH_SINGLE_POST', payload: data })
+        dispatch({type: 'FETCH_RECENT_POSTS', payload: data })
     } catch (er) {
         console.log(er)
+    }
+}
+
+export const likePostAction = (id, actionType) => async (dispatch) =>{
+    try {
+        await likePost(id)
+        const { data } = await fetchSinglePost(id)
+
+        dispatch({ type: actionType, payload: data })
+    } catch (error) {
+        console.log(error);
     }
 }

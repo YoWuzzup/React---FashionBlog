@@ -53,7 +53,7 @@ export default function BlogContent() {
                             xs={10}
                             key={`${post}_${index}`}
                         >
-                            <Post post={post} />
+                            <Post post={post} actionType={'LIKE_POST'} />
                         </Grid>
                     )
                 })}

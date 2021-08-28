@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Grid } from '@material-ui/core'
 import { Post } from '..'
-import { getPosts } from '../../Redux/Actions/Posts'
+import { getRecentPosts } from '../../Redux/Actions/Posts'
 
-export default function RecentPosts({ fetchLength, rootStyle, page }) {
+export default function RecentPosts({ fetchLength, page }) {
     const dispatch = useDispatch()
-    const fetchedRecentPosts = useSelector(state => state.posts)
+    const fetchedRecentPosts = useSelector(state => state.recentPosts)
 
     useEffect(() => {
-        dispatch(getPosts(fetchLength))
+        dispatch(getRecentPosts(fetchLength))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -17,12 +17,11 @@ export default function RecentPosts({ fetchLength, rootStyle, page }) {
         <Grid
             container item
             direction="row"
-            alignItems='center'
+            alignItems='flex-start'
             justify={page === 'main' ? "center" : 'space-between'}
-            spacing={5}
+            spacing={3}
             md={7}
             xs={10}
-            style={{ rootStyle }}
         >
             {fetchedRecentPosts && fetchedRecentPosts.map((post, index)=>{
                     return(
@@ -32,7 +31,7 @@ export default function RecentPosts({ fetchLength, rootStyle, page }) {
                             xs={12}
                             key={`${post}_${index}`}
                         >
-                            <Post post={post} page={page} />
+                            <Post post={post} page={page} actionType={'LIKE_RECENT_POST'} />
                         </Grid>
                     )
                 })}

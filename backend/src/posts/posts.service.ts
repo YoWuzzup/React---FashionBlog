@@ -41,6 +41,16 @@ export class PostsService{
         }
     }
 
+    async likePost(postId: string){
+        const post = await this.findPost(postId)
+
+        post.likes++
+
+        post.save()
+        return{
+            ...post
+        }
+    }
 
     private async findPost(id: string): Promise<Post>{
         let post

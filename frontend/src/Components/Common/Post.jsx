@@ -50,7 +50,8 @@ const useStyles = makeStyles({
     },
     likes:{
         transition: 'all .2s ease-in-out',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        width: 'auto'
     },
     statistics: {
         justifyContent: 'space-around',
@@ -70,17 +71,18 @@ const Svg = ()=>{
     )
 }
 
-export default function Post({ post, page }) {
+export default function Post({ post, page, actionType }) {
     const classes = useStyles()
     const date = new Date(`${post.date}`)
     const day = date.getDate()
     const month = date.toLocaleString('default', {month: 'short'})
-
+    const linkTo = post.id ?? post._id
+    
     return (
         <div
             className={classes.root} 
         >
-            <Link to={`posts/${post.id}`} >
+            <Link to={`/posts/${linkTo}`} >
                 <img 
                     alt={`${post.title}`} 
                     src={post.image} 
@@ -135,8 +137,8 @@ export default function Post({ post, page }) {
                     
                 </Grid>
 
-                <Link to={`posts/${post.id}`} className={classes.title}>
-                    <h3 style={{ margin: '0', minHeight: '70px' }}>
+                <Link to={`/posts/${post.id ?? post._id}`} className={classes.title}>
+                    <h3 style={{ margin: '0', minHeight: '100px' }}>
                         {post.title}
                     </h3>
                 </Link>
@@ -162,7 +164,7 @@ export default function Post({ post, page }) {
                             {post.comments.length} 
                         </Grid>
 
-                        <LikesButton likes={post.likes} likesStyles={classes.likes} />
+                        <LikesButton postId={post.id ?? post._id} likes={post.likes} likesStyles={classes.likes} actionType={actionType} />
 
                 </Grid>
 

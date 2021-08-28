@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import { makeStyles, Grid, Typography, CardMedia, Button } from '@material-ui/core'
 import { FiberManualRecord, MoreVert } from '@material-ui/icons'
 
-import { getSinglePost } from '../../Redux/Actions/Posts'
 import { PostSortingButtons, Links, LikesButton, RecentPosts, PostCommentSection } from '../'
 
 const useStyles = makeStyles(theme=>({
@@ -110,22 +109,16 @@ const Svg = ()=>{
 
 export default function SinglePost() {
     const classes = useStyles()
-    const dispatch = useDispatch()
     const { id } = useParams()
-    const fetchedPostInfo = useSelector( state => state.singlePost._doc )
-    const thisPostComments = fetchedPostInfo && fetchedPostInfo.comments
-    const date = fetchedPostInfo && new Date(`${fetchedPostInfo.date}`)
-    const day = fetchedPostInfo && date.getDate()
-    const month = fetchedPostInfo && date.toLocaleString('default', { month: 'short' })
+    const singlePostInfo = useSelector( state => state.posts.find(e => e.id === id || e._id === id))
+    const thisPostComments = singlePostInfo && singlePostInfo.comments
+    const date = singlePostInfo && new Date(`${singlePostInfo.date}`)
+    const day = singlePostInfo && date.getDate()
+    const month = singlePostInfo && date.toLocaleString('default', { month: 'short' })
 
-    const handleClick = e=>{
+    const handleClick = e =>{
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
     }
-
-    useEffect(() => {
-        dispatch(getSinglePost(id))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     return (
         <Grid container
@@ -138,7 +131,7 @@ export default function SinglePost() {
                 <PostSortingButtons />
             </div>
 
-            {fetchedPostInfo && 
+            {singlePostInfo && 
                 <Grid 
                     className={classes.postData}
                     container item
@@ -160,7 +153,7 @@ export default function SinglePost() {
                             alignItems="center"
                             xs={1}
                         >
-                            {fetchedPostInfo.author}
+                            {singlePostInfo.author}
                             <FiberManualRecord style={{ fontSize: 4, margin: '0 7px' }} />
                         </Grid>
 
@@ -177,7 +170,7 @@ export default function SinglePost() {
                             xs={2}
                             className={classes.readingLength}
                         >
-                            {`${fetchedPostInfo.readingLength} min read`}
+                            {`${singlePostInfo.readingLength} min read`}
                         </Grid>
 
                         <MoreVert className={`${classes.hoverEffect}`} style={{ fontSize: 20, margin: '0 0 0 auto'  }} />
@@ -195,25 +188,25 @@ export default function SinglePost() {
                             style={{ fontWeight: '600' }}
                             className={classes.title}
                         >
-                            {fetchedPostInfo.title}
+                            {singlePostInfo.title}
                         </Typography> 
 
                         <Typography align='left' >
-                            {fetchedPostInfo.subtitle}
+                            {singlePostInfo.subtitle}
                         </Typography>
 
                         <CardMedia 
                             component="img"
                             className={classes.image}
-                            src={`${fetchedPostInfo.image}`}
-                            title={`${fetchedPostInfo.title}`}
+                            src={`${singlePostInfo.image}`}
+                            title={`${singlePostInfo.title}`}
                         />
 
                         <Grid item container
                             alignItems="center"
                             xs={12}
                         >
-                            {fetchedPostInfo.content.map((item,index)=>{
+                            {singlePostInfo.content.map((item,index)=>{
                                 return(
                                     <Typography 
                                         variant="body2" 
@@ -247,7 +240,7 @@ export default function SinglePost() {
                             alignItems="center"
                             xs={8}
                         >
-                            {fetchedPostInfo.tags.map((item, index)=>{
+                            {singlePostInfo.tags.map((item, index)=>{
                                 return(
                                     <Button 
                                         disableRipple
@@ -279,7 +272,7 @@ export default function SinglePost() {
                                 component="p" 
                                 gutterBottom 
                             >
-                                {fetchedPostInfo.views} views
+                                {singlePostInfo.views} views
                             </Typography>
 
                             <Typography 
@@ -288,11 +281,11 @@ export default function SinglePost() {
                                 component="p" 
                                 gutterBottom 
                             >
-                                {fetchedPostInfo.comments.length} comment{fetchedPostInfo.comments.length > 1 ? 's' : ''}
+                                {singlePostInfo.comments.length} comment{singlePostInfo.comments.length > 1 ? 's' : ''}
                             </Typography>
                         </Grid>
 
-                        <LikesButton likes={fetchedPostInfo.likes} likesStyles={classes.likes} />
+                        <LikesButton postId={singlePostInfo.id ?? singlePostInfo._id} likes={singlePostInfo.likes} likesStyles={classes.likes} actionType={'LIKE_POST'} />
                     </Grid>
 
 
