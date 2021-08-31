@@ -1,4 +1,5 @@
 import React from 'react'
+import MailchimpSubscribe from "react-mailchimp-subscribe"
 import { Links } from '../index'
 import { makeStyles } from '@material-ui/core/styles'
 import { InputBase, InputLabel, Typography } from '@material-ui/core'
@@ -34,7 +35,7 @@ const useStyles = makeStyles(theme =>({
         display: 'flex',
         flexFlow: 'column',
         fontSize: '19px',
-        flexBasis: '45%',
+        flexBasis: '100%',
         margin: '10px 0 0'
     },
     input:{
@@ -45,7 +46,6 @@ const useStyles = makeStyles(theme =>({
         borderBottom: '1px solid #000' 
     },
     btn:{
-        flexBasis: '45%',
         outline: 'none',
         height: '50px',
         backgroundColor: '#fff',
@@ -89,7 +89,99 @@ const useStyles = makeStyles(theme =>({
     }
 }))
 
+
+const CustomForm = ({ status, message, onValidated }) => {
+    const classes = useStyles()
+    const [ email, setEmail ] = React.useState(null)
+    const [ , setError ] = React.useState(null)
+
+    const submit = (e) => {
+        e.preventDefault()
+        setError(null);
+
+        if ( !email ) {
+            setError( 'Please enter a valid email address' );
+        return null;
+        }
+
+        const isFormValidated = onValidated({ EMAIL: email });
+
+        // On success return true
+        return email && email.indexOf("@") > -1 && isFormValidated;
+    }
+  
+    const handleInputKeyEvent = ( event ) => {
+        setError(null);
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          // Cancel the default action, if needed
+          event.preventDefault();
+          // Trigger the button element with a click
+          submit()
+        }
+    }
+
+    return (
+        <div
+        style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+            flexFlow: 'row wrap',
+            flexBasis: '100%'
+        }}
+        >
+            {status === "sending" && <div >sending...</div>}
+            {status === "error" && (
+            <div
+                style={{ color: "red" }}
+                dangerouslySetInnerHTML={{ __html: message }}
+            />
+            )}
+            {status === "success" && (
+            <div
+                style={{ color: "green" }}
+                dangerouslySetInnerHTML={{ __html: message }}
+            />
+            )}
+
+            <InputLabel  htmlFor='email' 
+                color='secondary' 
+                style={{ flexBasis: '100%', color: '#000' }}
+                required
+            >
+                Email
+            </InputLabel>
+
+            <div                     
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row',
+                        flexWrap: 'wrap', fontSize: "1em", flexBasis: '35%' }}
+            
+            >
+                <input
+                    style={{ flex: '0 1 450px', height: '30px', outline: 'none', border: 'none', 
+                            borderBottom: '1px solid #000' }}
+                    type="email"
+                    placeholder="Your email"
+                    onChange={(event) => setEmail(event?.target?.value ?? '')}
+                    onKeyUp={(event) => handleInputKeyEvent(event)}
+            />
+            </div>
+
+            <button 
+                className={classes.btn}
+                style={{ flexBasis: '45%', margin: '0' }}
+                onClick={e => submit(e)}
+            >
+                Join
+            </button>
+      </div>
+    );
+};
+
+  
 export default function Footer() {
+    const MAILCHIMP_URL = process.env.REACT_APP_MAILCHIMP_URL
     const [allValues, setAllValues] = React.useState({
         name: '',
         surname: '',
@@ -97,12 +189,8 @@ export default function Footer() {
         subject: '',
         message: ''
     })
-    const [email, setEmail] = React.useState('')
-    const classes = useStyles()
 
-    const handlgeEmail = e =>{
-        setEmail({...email, [e.target.name]: e.target.value })
-    }
+    const classes = useStyles()
 
     const handleChange = e =>{
         setAllValues({ ...allValues, [e.target.name]: e.target.value })
@@ -127,24 +215,19 @@ export default function Footer() {
 
                     <div className={classes.labelAndInput}>
 
-                        <InputLabel  htmlFor='email' className={`${classes.emailForm_label} ${classes.labels}`} 
-                            color='secondary' required
-                        >
-                            Email
-                        </InputLabel>
-
-                        <InputBase  type='email' id='email' name='email'  
-                            className={classes.input}
-                            onChange={handlgeEmail}
+                        <MailchimpSubscribe 
+                            url={MAILCHIMP_URL} 
+                            render={({ subscribe, status, message }) => (
+                                <CustomForm
+                                    status={status}
+                                    message={message}
+                                    onValidated={formData => subscribe(formData)}
+                                />
+                            )}
                         />
 
                     </div>
-
-                    <button type='submit' form='emailForm' value='Join' 
-                        className={classes.btn}
-                    >
-                        Join
-                    </button>
+                    
                 </form>
 
                 <Typography variant='h4' 
@@ -160,7 +243,6 @@ export default function Footer() {
 
             </div>
         
-
 
             <div className={classes.rightSide} >
                 

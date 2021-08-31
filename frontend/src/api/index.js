@@ -2,15 +2,23 @@ import axios from 'axios'
 
 const url = 'http://localhost:5000/'
 
-export const fetchProducts = async ()=>{
+export const fetchProducts = async (fetchLength) =>{
     try {
-        return axios.get(`${url}products`)
+        let query
+
+        if(fetchLength){
+            query = `?fetchLength=${fetchLength}`
+        } else {
+            query = ''
+        }
+
+        return axios.get(`${url}products${query}`)
     } catch (error) {
         console.log(error);        
     }
 }
 
-export const fetchPosts = async (fetchLength)=>{
+export const fetchPosts = async (fetchLength) =>{
     try {
         let query
 

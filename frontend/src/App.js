@@ -5,6 +5,7 @@ import { NavigationBar, Footer, SinglePost } from './Components'
 import { Home, Blog, Shop, About } from './Pages'
 import { NameContext } from './Context'
 
+
 function App() {
 
   return (

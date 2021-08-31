@@ -10,3 +10,13 @@ export const getProducts = ()=> async (dispatch) =>{
         console.log(er)
     }
 }
+
+export const getRecentProducts = (fetchLength)=> async (dispatch) =>{
+    try{
+        const { data } = await fetchProducts(fetchLength)
+
+        dispatch({ type: 'FETCH_RECENT_ITEMS', payload: data })
+    } catch(er){
+        console.log(er)
+    }
+}
