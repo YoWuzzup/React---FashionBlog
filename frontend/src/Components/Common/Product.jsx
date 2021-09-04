@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme=>({
         minHeight: 'auto',
         display: 'flex',
         flexFlow: 'column',
-        margin: '0 55px 100px'
+        margin: '0 55px 50px'
     },
     imagebackgound:{
         width: '220px',

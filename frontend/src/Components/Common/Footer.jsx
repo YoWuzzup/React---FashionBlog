@@ -3,6 +3,7 @@ import MailchimpSubscribe from "react-mailchimp-subscribe"
 import { Links } from '../index'
 import { makeStyles } from '@material-ui/core/styles'
 import { InputBase, InputLabel, Typography } from '@material-ui/core'
+import { userSendEmail } from '../../api/index'
 
 const useStyles = makeStyles(theme =>({
     root:{
@@ -132,18 +133,7 @@ const CustomForm = ({ status, message, onValidated }) => {
         }}
         >
             {status === "sending" && <div >sending...</div>}
-            {status === "error" && (
-            <div
-                style={{ color: "red" }}
-                dangerouslySetInnerHTML={{ __html: message }}
-            />
-            )}
-            {status === "success" && (
-            <div
-                style={{ color: "green" }}
-                dangerouslySetInnerHTML={{ __html: message }}
-            />
-            )}
+            
 
             <InputLabel  htmlFor='email' 
                 color='secondary' 
@@ -160,12 +150,14 @@ const CustomForm = ({ status, message, onValidated }) => {
             >
                 <input
                     style={{ flex: '0 1 450px', height: '30px', outline: 'none', border: 'none', 
-                            borderBottom: '1px solid #000' }}
+                            borderBottom: status === "error" ? '1px solid red' : '1px solid #000',
+                            backgroundColor: status === "error" ? '#ff9f9f' : '#fff'
+                            }}
                     type="email"
                     placeholder="Your email"
                     onChange={(event) => setEmail(event?.target?.value ?? '')}
                     onKeyUp={(event) => handleInputKeyEvent(event)}
-            />
+                />
             </div>
 
             <button 
@@ -175,6 +167,15 @@ const CustomForm = ({ status, message, onValidated }) => {
             >
                 Join
             </button>
+
+            
+            {status === "success" && (
+                <div
+                    style={{ color: "#000", margin: '10px 0 0' }}
+                    dangerouslySetInnerHTML={{ __html: message }}
+                />
+            )}
+
       </div>
     );
 };
@@ -185,15 +186,31 @@ export default function Footer() {
     const [allValues, setAllValues] = React.useState({
         name: '',
         surname: '',
-        mainEmail: '',
+        email: '',
         subject: '',
         message: ''
     })
+
+    const resetedValues = {
+        name: '',
+        surname: '',
+        email: '',
+        subject: '',
+        message: ''
+    }
 
     const classes = useStyles()
 
     const handleChange = e =>{
         setAllValues({ ...allValues, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmitForm = e =>{
+        e.preventDefault()
+        
+        userSendEmail(allValues)
+        setAllValues(resetedValues)
+        e.target.reset()
     }
 
     return (
@@ -251,6 +268,7 @@ export default function Footer() {
                 </p>
 
                 <form id='main'
+                    onSubmit={handleSubmitForm}
                     className={classes.mainForm}
                 >
 
@@ -281,13 +299,13 @@ export default function Footer() {
                     </div>
                     
                     <div className={classes.labelAndInput}>
-                        <InputLabel  htmlFor='mainEmail' className={classes.labels} 
+                        <InputLabel  htmlFor='mail' className={classes.labels} 
                             color='secondary' required
                         >
                             Email
                         </InputLabel>
 
-                        <InputBase  type='email' id='mainEmail' name='mainEmail'  
+                        <InputBase  type='email' id='email' name='email'  
                             className={classes.input}
                             onChange={handleChange}
                         />

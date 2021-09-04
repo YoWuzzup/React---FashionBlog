@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core'
 import { Post } from '..'
 import { getRecentPosts } from '../../Redux/Actions/Posts'
 
-export default function RecentPosts({ fetchLength, page }) {
+export default function RecentPosts({ fetchLength, page, handleClick }) {
     const dispatch = useDispatch()
     const fetchedRecentPosts = useSelector(state => state.recentPosts)
 
@@ -30,6 +30,8 @@ export default function RecentPosts({ fetchLength, page }) {
                             md={10}
                             xs={12}
                             key={`${post}_${index}`}
+                            // crutch :)
+                            onClick={handleClick}
                         >
                             <Post post={post} page={page} actionType={'LIKE_RECENT_POST'} />
                         </Grid>

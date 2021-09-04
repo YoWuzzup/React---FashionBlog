@@ -4,8 +4,10 @@ import * as dotenv from 'dotenv'
 
 import { AppController } from './app.controller'
 import { AppService } from "./app.service"
+
 import { ProductsModule } from './products/products.module'
 import { PostsModule } from './posts/posts.module'
+import { MailModule } from './mail/mail.module';
 
 dotenv.config()
 
@@ -16,6 +18,7 @@ dotenv.config()
         MongooseModule.forRoot(
             `mongodb+srv://${process.env.MONGODB_LOGIN}:${process.env.MONGODB_PASSWORD}@fashionblog.ehsqf.mongodb.net/fashionBlog`
         ),
+        MailModule,
     ],
     controllers: [AppController],
     providers: [AppService]

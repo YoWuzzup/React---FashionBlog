@@ -23,16 +23,16 @@ export default function Links({ jContent }) {
             justify={`${jContent}`} alignItems='center' alignContent='center' 
             className={`${classes.linksContainer}`}
         >
-            <a href="https://www.instagram.com/" className={classes.links} >
+            <a href="https://www.instagram.com/yowuzzupla/" className={classes.links} >
                 <Instagram />
             </a>
-            <a href="https://www.facebook.com/" className={classes.links} >
+            <a href="https://www.facebook.com/YoWuzzupLA" className={classes.links} >
                 <Facebook />
             </a>
             <a href="https://www.youtube.com/" className={classes.links} >
                 <YouTube />
             </a>
-            <a href="https://www.linkedin.com/" className={classes.links} >
+            <a href="https://www.linkedin.com/in/yowuzzup/" className={classes.links} >
                 <LinkedIn />
             </a>
         </Grid>

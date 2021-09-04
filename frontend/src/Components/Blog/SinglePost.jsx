@@ -1,7 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { getPosts } from '../../Redux/Actions/Posts'
 
 import { makeStyles, Grid, Typography, CardMedia, Button } from '@material-ui/core'
 import { FiberManualRecord, MoreVert } from '@material-ui/icons'
@@ -109,6 +110,7 @@ const Svg = ()=>{
 
 export default function SinglePost() {
     const classes = useStyles()
+    const dispatch = useDispatch()
     const { id } = useParams()
     const singlePostInfo = useSelector( state => state.posts.find(e => e.id === id || e._id === id))
     const thisPostComments = singlePostInfo && singlePostInfo.comments
@@ -119,6 +121,13 @@ export default function SinglePost() {
     const handleClick = e =>{
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
     }
+
+    React.useEffect(() => {
+        if(!singlePostInfo){
+            dispatch(getPosts())
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Grid container
@@ -320,7 +329,7 @@ export default function SinglePost() {
                 </Button>
             </Grid>
 
-            <RecentPosts fetchLength={2} />
+            <RecentPosts fetchLength={2} handleClick={handleClick} />
             <PostCommentSection comments={thisPostComments} />
         </Grid> 
     )

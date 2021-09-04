@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getRecentProducts } from '../../Redux/Actions/Products'
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Product } from '../'
+import { Product, WithButtonStyles } from '../'
 
 const useStyles = makeStyles(theme => ({
     root:{
@@ -58,6 +58,9 @@ export default function RecentProductsBlock() {
                    ) 
                 })}
             </Grid>
+
+            <WithButtonStyles name={'View All'} url={'shop'} /> 
+
         </Grid>
     )
 }

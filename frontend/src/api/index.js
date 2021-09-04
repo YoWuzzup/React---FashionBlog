@@ -49,3 +49,11 @@ export const likePost = async id =>{
         console.log(error);
     }
 }
+
+export const userSendEmail = async data =>{
+    try {
+        return axios.post(`${url}api/sendemail`, data)
+    } catch (error) {
+        console.log(error);
+    }
+}

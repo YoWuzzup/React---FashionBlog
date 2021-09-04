@@ -8,7 +8,7 @@ const styles = {
         backgroundColor: '#fff',
         transition: 'all .3s ease-in-out',
         fontSize: 'inherit',
-        margin: '20px 0 0',
+        margin: '20px 0 50px',
         padding: '0',
         border: '1px solid #000',
         borderRadius: '0',

@@ -160,8 +160,10 @@ export default function Post({ post, page, actionType }) {
                             xs={2}
                             className={classes.hoverEffect}
                         >
-                            <ChatBubbleOutline style={{ fontSize: 20, margin: '0 7px 0 0' }} />
-                            {post.comments.length} 
+                            <Link to={`/posts/${post.id ?? post._id}`} >
+                                <ChatBubbleOutline style={{ fontSize: 20, margin: '0 7px 0 0' }} />
+                                {post.comments.length}
+                            </Link>
                         </Grid>
 
                         <LikesButton postId={post.id ?? post._id} likes={post.likes} likesStyles={classes.likes} actionType={actionType} />
