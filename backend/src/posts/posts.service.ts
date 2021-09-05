@@ -11,13 +11,32 @@ export class PostsService{
     ){}
 
     async getPosts(@Query() query: Record<string, any>): Promise<object> {
-        const posts = query ? 
-            await this.postModel.find().sort('-date').limit(Number(query.fetchLength)).exec() 
-            : 
-            await this.postModel.find().exec()
-        
+        let posts: any
 
-        return posts.map(post =>({
+        if(query.sorting){
+            if(['allposts', 'All Posts'].indexOf(query.sorting) >= 0){
+                posts = await this.postModel.find().sort('-date').exec()
+            } else if(query.sorting === 'fashion'){
+                posts = await this.postModel.find({
+                    tags : 'fashion'
+                    }).sort('-date').exec()
+            } else if(query.sorting === 'beauty'){
+                posts = await this.postModel.find({
+                    tags : 'beauty'
+                    }).sort('-date').exec()
+            } else if(query.sorting === 'home'){
+                posts = await this.postModel.find({
+                    tags : 'home'
+                    }).sort('-date').exec()
+            }
+
+        } else if(query.fetchLength){
+            posts = await this.postModel.find().sort('-date').limit(Number(query.fetchLength)).exec() 
+        } else {
+                    posts = await this.postModel.find().exec()
+        }
+
+        return posts?.map(post =>({
             id: post.id,
             title: post.title,
             subtitle: post.subtitle,

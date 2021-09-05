@@ -1,6 +1,6 @@
 const initialState = {
     navigationButton: 'home',
-    postSortingButton: 'All Posts'
+    postSortingButton: 'allposts'
 }
 
 export const navigationButton = (button = initialState.navigationButton, action) =>{

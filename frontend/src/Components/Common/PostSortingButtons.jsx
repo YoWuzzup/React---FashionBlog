@@ -79,7 +79,7 @@ export default function PostSortingButtons() {
                         disableRipple
                         className={`${classes.buttons} ${activeSort === item.query ? classes.activeButtons : ''}`} 
                         onClick={ e => handleActiveSortClick(e)} 
-                        key={`${item.tex}_${index}`}
+                        key={`${item.text}_${index}`}
                     >
                         {item.text}
                     </Button>)

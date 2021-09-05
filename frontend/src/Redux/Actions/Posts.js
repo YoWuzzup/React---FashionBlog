@@ -1,9 +1,11 @@
 import { fetchPosts, likePost, fetchSinglePost } from '../../api/index'
 
 // action creators
-export const getPosts = () => async (dispatch)=>{
+export const getPosts = (sorting) => async (dispatch)=>{
     try {
-        const { data } = await fetchPosts()
+        // crutch
+        let _ = null
+        const { data } = sorting ? await fetchPosts(_, sorting) : await fetchPosts()
 
         dispatch({type: 'FETCH_POSTS', payload: data })
     } catch (er) {

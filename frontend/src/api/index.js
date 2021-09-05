@@ -18,14 +18,22 @@ export const fetchProducts = async (fetchLength) =>{
     }
 }
 
-export const fetchPosts = async (fetchLength) =>{
+export const fetchPosts = async (fetchLength, sorting) =>{
     try {
         let query
 
-        if(fetchLength){
+        if(fetchLength && !sorting){
             query = `?fetchLength=${fetchLength}`
         } else {
             query = ''
+        }
+        
+        if(sorting){
+            if(query.length === 0){
+                query = `?sorting=${sorting}`
+            } else {
+                query = `${query}&sorting=${sorting}`
+            }
         }
 
         return axios.get(`${url}posts${query}`)
